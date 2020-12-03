@@ -3,14 +3,15 @@
   <head>
     <title>Chat App</title>
     <style>
+        /** Disclaimer: I am not good at CSS, so this can certainly be improved.*/
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font: 13px Helvetica, Arial; }
         form { background: #fff; padding: 3px; width: 50%;
-            border-color: #000; border-style: solid; border-width: 1px; vertical-align: bottom;}
+            border-color: #000; border-style: solid; border-width: 1px;}
         form input { border-style: solid; border-width: 1px; padding: 10px; width: 75%; margin-right: .8%;}
         form button { width: 24%; background: rgb(130, 224, 255); border: none; padding: 10px; margin-left: 0.8%%; }
         #messages { list-style-type: none; width: 50%; height: 600px; max-height: 600px align: center; padding: 3px; border-color: #000; border-style: solid; border-width: 1px;
-            overflow: auto;}
+            overflow: auto; margin-top: 5%;}
         #messages ul {width:50px; height:100px; border-style:solid; border-width:1px;
             list-style-type:none; margin-left: 0.5%;}
         #messages li {text-align:left; padding: 4.25px;}
@@ -20,13 +21,15 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   </head>
   <body>
-    <div id="wrapper-messages" align="center" >
-        <ul id="messages"></ul>
-    </div>
-    <div align="center">
-        <form action="/" method="POST" id="chatForm">
-          <input id="txt" autocomplete="off" autofocus="on" placeholder="Type your message here..." /><button>Send</button>
-        </form>
+    <div id="container">
+        <div id="wrapper-messages" align="center" >
+            <ul id="messages"></ul>
+        </div>
+        <div align="center">
+            <form action="/" method="POST" id="chatForm">
+              <input id="txt" autocomplete="off" autofocus="on" placeholder="Type your message here..." /><button>Send</button>
+            </form>
+        </div>
     </div>
     <script>
             var socket = io.connect('http://localhost:8080');
