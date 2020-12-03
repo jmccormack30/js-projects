@@ -1,0 +1,16 @@
+Features TODO:
+
+1.) Refresh button to clear the chat (Meh)
+2.) Menu to see which Users are currentely in the chat
+3.) Send emojis
+4.) Create Username/Password and store in DB
+	-) Symbol to reckognize official users - Guest usernames generated otherwise?
+5.) Private messages between Users
+6.) Store private message history in DB
+7.) Typing notification (someone is typing..?) - User specific? multiple users typing?
+8.) Create multiple chat rooms
+9.) Commands for users to type (roleplay/ helpful commands)
+10.) Custom emotes
+	-) GIFs?
+11.) Upload images?
+12. Admin acccess (for my own user, ability to ban users, mute users, etc..)
