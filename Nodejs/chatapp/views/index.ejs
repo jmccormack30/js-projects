@@ -56,9 +56,12 @@
                 element.scrollTop = element.scrollHeight;
             });
 
-            // ask username
-            var username = prompt('Please tell me your name');
-            socket.emit('username', username);
+            socket.on('user_startup', function(msg){
+                var username = prompt(msg);
+                socket.emit('username', username);
+            });
+
+            socket.emit('user_connected');
     </script>
   </body>
 </html>

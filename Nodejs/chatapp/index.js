@@ -7,18 +7,39 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
+var users = new Set();
+
 io.sockets.on('connection', function(socket) {
     socket.on('username', function(username) {
-        socket.username = username;
-        io.emit('is_online', '🔵 <i>' + socket.username + ' has joined the chat.</i>');
+        if (username !== null) {
+            if (users.has(username)) {
+                console.log("User already exists.");
+                io.emit('user_startup', 'Username is already taken. Please try another:');
+            } else {
+                socket.username = username;
+                users.add(socket.username);
+                io.emit('is_online', '🔵 <i>' + socket.username + ' has joined the chat.</i>');
+            }
+        }
     });
 
     socket.on('disconnect', function(username) {
-        io.emit('is_online', '🔴 <i>' + socket.username + ' has left the chat.</i>');
-    })
+        if (socket.username !== null && socket.username !== undefined) {
+            users.delete(socket.username);
+            io.emit('is_online', '🔴 <i>' + socket.username + ' has left the chat.</i>');
+        }
+    });
 
     socket.on('chat_message', function(message) {
-        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+        if (message === "/help") {
+            io.emit('chat_message', '<strong>Welcome to the server!</strong>');
+        } else {
+            io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+        }
+    });
+
+    socket.on('user_connected', function() {
+        io.emit('user_startup', 'Enter your username:');
     });
 });
 
