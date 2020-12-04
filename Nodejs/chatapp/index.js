@@ -31,8 +31,13 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('chat_message', function(message) {
-        if (message === "/help") {
-            io.emit('chat_message', '<strong>Welcome to the server!</strong>');
+        if (message === "/users") {
+            var msg = 'Users online: ';
+            for (let username of users) {
+                msg = msg + username + ', ';
+            }
+            msg = msg.substring(0,msg.length-2)+'.';
+            socket.emit('chat_message', msg);
         } else {
             io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
         }

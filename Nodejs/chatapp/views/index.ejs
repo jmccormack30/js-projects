@@ -44,6 +44,7 @@
 
             // append the chat text message
             socket.on('chat_message', function(msg){
+                console.log(msg);
                 $('#messages').append($('<li>').html(msg));
                 var element = document.getElementById("messages");
                 element.scrollTop = element.scrollHeight;
