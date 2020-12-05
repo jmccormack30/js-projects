@@ -11,9 +11,10 @@ var users = new Set();
 
 io.sockets.on('connection', function(socket) {
     socket.on('username', function(username) {
-        if (username !== null) {
-            if (users.has(username)) {
-                console.log("User already exists.");
+        if (username !== null && username !== undefined) {
+            if (!username.replace(/\s/g, '').length) {
+                io.emit('user_startup', 'Please enter a valid username:');
+            } else if (users.has(username)) {
                 io.emit('user_startup', 'Username is already taken. Please try another:');
             } else {
                 socket.username = username;
