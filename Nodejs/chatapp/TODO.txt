@@ -2,7 +2,10 @@ Features TODO:
 
 1.) Refresh button to clear the chat (Meh)
 2.) Menu to see which Users are currentely in the chat
-3.) Send emojis
+3.) Emojis
+	-) Add support for a menu button to select an emoji to send
+		.) Future support for frequently used emojis for users?
+	-) convert things like :), :P, <3, :( into emojis as well
 4.) Create Username/Password and store in DB
 	-) Symbol to reckognize official users - Guest usernames generated otherwise?
 5.) Private messages between Users
@@ -14,4 +17,9 @@ Features TODO:
 	-) GIFs?
 11.) Upload images?
 12. Admin acccess (for my own user, ability to ban users, mute users, etc..)
-13. Different color names for Users (like Twitch)
+	-) When having db, some field IS_ADMIN, with access to commands for admin
+14. Colors
+	-) Different color names for Users (like Twitch)
+		-) Ability for the User to switch their name color with some UI element
+	-) Different color/font to distinguish system messages (when using commands)
+	-) Different color/font to distinguish whisper messages

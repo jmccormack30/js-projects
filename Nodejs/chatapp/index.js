@@ -4,11 +4,16 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const emoji = require('node-emoji');
 
+var timeout = undefined;
+var typing = false;
+
 app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
 var users = new Map();
+var typing = new Map();
+var typingMessage = false;
 
 io.sockets.on('connection', function(socket) {
     socket.on('username', function(username) {
@@ -76,8 +81,21 @@ io.sockets.on('connection', function(socket) {
     socket.on('user_connected', function() {
         io.emit('user_startup', 'Enter your username:');
     });
+
+    socket.on('typing', function(message) {
+        if (message === true) {
+            if (!typingMessage) {
+                typingMessage = true;
+                socket.broadcast.emit('chat_message', 'Someone is typing..');
+            }
+        } else {
+            typingMessage = false;
+            socket.broadcast.emit('chat_message', "Done typing.");
+        }
+    });
 });
 
 const server = http.listen(8080, function() {
     console.log('Listening on *:8080');
 });
+

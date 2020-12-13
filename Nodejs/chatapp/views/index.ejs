@@ -18,7 +18,7 @@
         #messages li:nth-child(odd) { background: #eee; }
     </style>
     <script src="../../socket.io/socket.io.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -33,6 +33,8 @@
     </div>
     <script>
             var socket = io.connect('http://localhost:8080');
+            var typing = false;
+            var timeout = undefined;
 
             // submit text message without reload/refresh the page
             $('form').submit(function(e){
@@ -44,7 +46,6 @@
 
             // append the chat text message
             socket.on('chat_message', function(msg){
-                console.log(msg);
                 $('#messages').append($('<li>').html(msg));
                 var element = document.getElementById("messages");
                 element.scrollTop = element.scrollHeight;
@@ -61,6 +62,27 @@
                 var username = prompt(msg);
                 socket.emit('username', username);
             });
+
+            $(document).ready(function() {
+                $('#txt').keypress((e) => {
+                    if (e.which!=13) {
+                        if (typing === true) {
+                            clearTimeout(timeout);
+                        }
+                        typing=true
+                        socket.emit('typing', true)
+                        timeout=setTimeout(typingTimeout, 4500);
+                    } else {
+                        clearTimeout(timeout);
+                        typingTimeout();
+                    }
+                });
+            });
+
+            function typingTimeout() {
+                typing = false;
+                socket.emit('typing', false);
+            }
 
             socket.emit('user_connected');
     </script>
